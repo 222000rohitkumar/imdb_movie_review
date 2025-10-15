@@ -361,18 +361,19 @@ with col_btn2:
     if st.button('🔍 Classify Sentiment', type="primary", use_container_width=True):
         if user_input.strip():
             with st.spinner('🤖 Analyzing sentiment...'):
+                # Predict sentiment
                 sentiment, confidence = predict_sentiment(user_input)
-                
-                # Display results in a beautiful card
+
+                # Display results card
                 st.markdown("""
                 <div class="prediction-card">
                     <h3 style="color: #667eea; margin-top: 0;">📊 Analysis Results</h3>
                 </div>
                 """, unsafe_allow_html=True)
-                
-                # Create columns for results
+
+                # Split results into two columns
                 result_col1, result_col2 = st.columns([1, 1])
-                
+
                 with result_col1:
                     # Sentiment display
                     if sentiment == 'Positive':
@@ -391,7 +392,7 @@ with col_btn2:
                             <h2 style="color: #f44336; margin: 0.5rem 0;">Negative</h2>
                         </div>
                         """, unsafe_allow_html=True)
-                
+
                 with result_col2:
                     # Confidence display
                     st.markdown(f"""
@@ -403,11 +404,11 @@ with col_btn2:
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
-                
+
                 # Progress bar
                 st.markdown("<br>", unsafe_allow_html=True)
                 st.progress(confidence)
-                
+
                 # Additional insights
                 if confidence > 0.8:
                     insight = "Very confident prediction! 🎯"
@@ -418,7 +419,7 @@ with col_btn2:
                 else:
                     insight = "Low confidence - review might be ambiguous 🤔"
                     insight_color = "#f44336"
-                
+
                 st.markdown(f"""
                 <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.1); 
                            border-radius: 10px; margin: 1rem 0;">
@@ -426,13 +427,15 @@ with col_btn2:
                 </div>
                 """, unsafe_allow_html=True)
 
-else:
+        else:
+            # Handle empty input
             st.markdown("""
             <div style="text-align: center; padding: 1rem; background: rgba(255, 152, 0, 0.2); 
                        border: 1px solid rgba(255, 152, 0, 0.5); border-radius: 10px; margin: 1rem 0;">
                 <p style="color: #FF9800; font-weight: 600; margin: 0;">⚠️ Please enter a movie review before classifying.</p>
             </div>
             """, unsafe_allow_html=True)
+
 
 # Sidebar with additional information
 with st.sidebar:
@@ -467,3 +470,4 @@ st.markdown("""
     <p>🚀 Powered by TensorFlow & Streamlit | Made with ❤️ for the ML community</p>
 </div>
 """, unsafe_allow_html=True)
+
